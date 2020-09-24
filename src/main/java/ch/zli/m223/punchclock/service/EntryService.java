@@ -18,6 +18,15 @@ public class EntryService {
         return entryRepository.saveAndFlush(entry);
     }
 
+    public void deleteEntry(Long id) {
+        entryRepository.deleteById(id);
+    }
+
+    public Entry putEntry(Long id, Entry entry) {
+        entry.setId(id);
+        return entryRepository.saveAndFlush(entry);
+    }
+
     public List<Entry> findAll() {
         return entryRepository.findAll();
     }

@@ -17,15 +17,31 @@ public class EntryController {
         this.entryService = entryService;
     }
 
+    //this is the function to get all entries. To get all users use the URL /entries, method: GET
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Entry> getAllEntries() {
         return entryService.findAll();
     }
 
+    //this is the function to create an entry use the URL /entries, method: POST and in the body as a JSON the attributes
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Entry createEntry(@Valid @RequestBody Entry entry) {
         return entryService.createEntry(entry);
+    }
+
+    //this is the function to delete an entry. To delete an entry use the URL /entries/idOfTheEntry, method: DELETE
+    @DeleteMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteEntry(@PathVariable Long id) {
+        entryService.deleteEntry(id);
+    }
+
+    //this is the function to edit an entry. To edit an entry use the URL /entries/idOfTheUser, method: PUT and in the body as a JSON the attributes
+    @PutMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Entry putEntry(@PathVariable Long id, @Valid @RequestBody Entry entry) {
+        return entryService.putEntry(id, entry);
     }
 }

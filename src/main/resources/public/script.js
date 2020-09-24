@@ -26,6 +26,39 @@ const createEntry = (e) => {
     });
 };
 
+const logIn = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const user = {};
+    user['username'] = formData.get('username');
+    user['password'] = formData.get('password');
+
+    fetch('/login', {
+        method: 'POST',
+        body: JSON.stringify(user),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
+};
+
+
+const signUp = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const user = {};
+    user['username'] = formData.get('username');
+    user['password'] = formData.get('password');
+
+    fetch('/users/sign-up', {
+        method: 'POST',
+        body: JSON.stringify(user),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
+};
+
 const indexEntries = () => {
     fetch(`${URL}/entries`, {
         method: 'GET'
@@ -52,12 +85,30 @@ const renderEntries = () => {
         row.appendChild(createCell(entry.id));
         row.appendChild(createCell(new Date(entry.checkIn).toLocaleString()));
         row.appendChild(createCell(new Date(entry.checkOut).toLocaleString()));
+        let x = row.appendChild(createCell(0));
+        x.innerHTML = '<button onclick=deleteEntry(' + entry.id + ')>Del</button>';
+        row.setAttribute("id", entry.id)
         display.appendChild(row);
     });
 };
 
-document.addEventListener('DOMContentLoaded', function(){
+document.addEventListener('DOMContentLoaded', function() {
     const createEntryForm = document.querySelector('#createEntryForm');
     createEntryForm.addEventListener('submit', createEntry);
     indexEntries();
 });
+document.addEventListener('DOMContentLoaded', function() {
+    const logInForm = document.querySelector('#logIn');
+    logInForm.addEventListener('submit', logIn);
+});
+document.addEventListener('DOMContentLoaded', function(){
+    const signUpForm = document.querySelector('#signUp');
+    signUpForm.addEventListener('submit', signUp);
+});
+
+function deleteEntry(id){
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("Delete", "entries/" + id, true);
+    xhttp.send();
+    document.getElementById(id).remove();
+}

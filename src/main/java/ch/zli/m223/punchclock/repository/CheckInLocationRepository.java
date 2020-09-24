@@ -1,2 +1,7 @@
-package ch.zli.m223.punchclock.repository;public class CheckInLocationRepository {
+package ch.zli.m223.punchclock.repository;
+
+import ch.zli.m223.punchclock.domain.CheckInLocation;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CheckInLocationRepository extends JpaRepository<CheckInLocation, Long> {
 }

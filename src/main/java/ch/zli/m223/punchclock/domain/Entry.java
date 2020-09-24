@@ -25,6 +25,14 @@ public class Entry {
     @Column(nullable = false)
     private LocalDateTime checkOut;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "applicaitonUser_id", referencedColumnName = "id")
+    private ApplicationUser applicationUser;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "checkInLocation_id", referencedColumnName = "id")
+    private CheckInLocation checkInLocation;
+
     public Long getId() {
         return id;
     }
@@ -47,5 +55,21 @@ public class Entry {
 
     public void setCheckOut(LocalDateTime checkOut) {
         this.checkOut = checkOut;
+    }
+
+    public ApplicationUser getApplicationUser() {
+        return applicationUser;
+    }
+
+    public void setApplicationUser(ApplicationUser applicationUser) {
+        this.applicationUser = applicationUser;
+    }
+
+    public CheckInLocation getCheckInLocation() {
+        return checkInLocation;
+    }
+
+    public void setCheckInLocation(CheckInLocation checkInLocation) {
+        this.checkInLocation = checkInLocation;
     }
 }
